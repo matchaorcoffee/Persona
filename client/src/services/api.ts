@@ -1,8 +1,14 @@
 import axios from 'axios';
 import { useAuthStore } from '../stores/auth.store';
 
+// In production the frontend is served from Vercel and calls the Render backend
+// directly. In development the Vite proxy forwards /api → localhost:3001.
+const baseURL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
+
 export const api = axios.create({
-  baseURL: '/api',
+  baseURL,
   withCredentials: true, // send cookies (refresh token)
 });
 
